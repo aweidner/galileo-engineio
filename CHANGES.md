@@ -1,5 +1,37 @@
 # python-engineio change log
 
+**Release 3.11.2** - 2020-01-03
+
+- Detect unreported websocket closures in asyncio client [#401](https://github.com/miguelgrinberg/python-socketio/issues/401) ([commit](https://github.com/miguelgrinberg/python-engineio/commit/a67b3d76d80e665ec071292dc4aadffb50be6d3f))
+- Initialize aiohttp when client connects directly through websocket [#152](https://github.com/miguelgrinberg/python-engineio/issues/152) ([commit](https://github.com/miguelgrinberg/python-engineio/commit/9a3d6453bd35bc9581b5dd9226dc9e6bba3a18aa))
+- Initialize the client's SIGINT signal handler only if a client is created [#147](https://github.com/miguelgrinberg/python-engineio/issues/147) ([commit](https://github.com/miguelgrinberg/python-engineio/commit/6534d324f3dce2e1e4927932660d5e5e8bcab202))
+- Add better exception handling for errors thrown by the websocket-client package [#155](https://github.com/miguelgrinberg/python-engineio/issues/155) * Add better exception handling for errors thrown by the websocket-client library. * Add test for handling websocket errors. ([commit](https://github.com/miguelgrinberg/python-engineio/commit/33c7cf1ba9ecc8dd24b0d850dfe334d425474612)) (thanks **Adam Grant**!)
+- Missing timeout when closing websocket client connection [#148](https://github.com/miguelgrinberg/python-engineio/issues/148) ([commit](https://github.com/miguelgrinberg/python-engineio/commit/02a2c705b01f171edea106a7ee867b6112074853))
+
+**Release 3.11.1** - 2019-12-10
+
+- Reset event when it is reused after a reconnect [#153](https://github.com/miguelgrinberg/python-engineio/issues/153) ([commit](https://github.com/miguelgrinberg/python-engineio/commit/179d0df931724f1c518d09417012e0adc90501fd))
+
+**Release 3.11.0** - 2019-12-07
+
+- Use aiohttp's WebSocket client [#324](https://github.com/miguelgrinberg/python-socketio/issues/324) ([commit](https://github.com/miguelgrinberg/python-engineio/commit/280aa0f00c0ca3d099c2a693f6c2ce7919d2dc86))
+- Support user created loops on the asyncio client [#1065](https://github.com/miguelgrinberg/Flask-SocketIO/issues/1065) ([commit](https://github.com/miguelgrinberg/python-engineio/commit/e38daad301d4b855cabf6a289b7348a58a314273))
+- Fix occasional server disconnect crashes [#146](https://github.com/miguelgrinberg/python-engineio/issues/146) ([commit](https://github.com/miguelgrinberg/python-engineio/commit/9f96cd827c59776cb7da72614891be05681e5063)) (thanks **Dominik Winecki**!)
+- Use X-Forwarded headers if present to verify origin ([commit](https://github.com/miguelgrinberg/python-engineio/commit/3c221aaec7173a046ca42f6aff9be0915cf92237))
+- Support async `make_response` function in ASGI driver [#145](https://github.com/miguelgrinberg/python-engineio/issues/145) ([commit](https://github.com/miguelgrinberg/python-engineio/commit/3f6391ca3229d26f081a16436cd4acd292ee69df))
+- Support not having a sigint handler [#143](https://github.com/miguelgrinberg/python-engineio/issues/143) ([commit](https://github.com/miguelgrinberg/python-engineio/commit/fc984aaa5e5dc91f6632729e56b34628f2fd2563)) (thanks **Robin Christine Burr**!)
+- Fix websocket exception handling on python2.7 [#149](https://github.com/miguelgrinberg/python-engineio/issues/149) ([commit](https://github.com/miguelgrinberg/python-engineio/commit/b714f81a0ee27e30070a5ca702a1823236df9981)) (thanks **Payton Yao**!)
+
+**Release 3.10.0** - 2019-10-22
+
+- Added support for SSL connection to unverified host in the client. [#137](https://github.com/miguelgrinberg/python-engineio/issues/137) ([commit](https://github.com/miguelgrinberg/python-engineio/commit/51da0bed3c93c41b980bb565560c7233da3501f5)) (thanks **sgaron-cse**!)
+- Performance improvements in parsing long-polling payloads ([commit](https://github.com/miguelgrinberg/python-engineio/commit/64a34fc1550458ded57014301d5f9e97534f0843))
+- Prevent heavy CPU usage when decoding payloads ([commit](https://github.com/miguelgrinberg/python-engineio/commit/c8407ae97821bb00c33a91114f425b8454f5e50e))
+- Handle case where no original SIGINT handler existed and call signal.… [#140](https://github.com/miguelgrinberg/python-engineio/issues/140) ([commit](https://github.com/miguelgrinberg/python-engineio/commit/9b4a10fede2ef3a9e85f370f48b6720fe7a15f35)) (thanks **Robin Christine Burr**!)
+- Accept any 2xx response as valid in the client [#331](https://github.com/miguelgrinberg/python-socketio/issues/331) ([commit](https://github.com/miguelgrinberg/python-engineio/commit/9d4ab4bb519d898ef170815deb767b85aeefd141))
+- Avoid loop without yield when sockets are >60 [#138](https://github.com/miguelgrinberg/python-engineio/issues/138) ([commit](https://github.com/miguelgrinberg/python-engineio/commit/5c6fbeac0e9f0788d300cf06de74ce65f8994f05)) (thanks **Gawen Arab**!)
+- Configurable ping interval grace period [#134](https://github.com/miguelgrinberg/python-engineio/issues/134) ([commit](https://github.com/miguelgrinberg/python-engineio/commit/bb2401354c3b7c3cf6a5577db83cc51ae071836e))
+
 **Release 3.9.3** - 2019-08-05
 
 - Apply timeouts to all HTTP requests sent from the client [#127](https://github.com/miguelgrinberg/python-engineio/issues/127) ([commit](https://github.com/miguelgrinberg/python-engineio/commit/6666d6a092333aa60f48ccdc42b250be60e9f33c))

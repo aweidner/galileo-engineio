@@ -168,7 +168,8 @@ class AsyncServer(server.Server):
                 pass
             else:
                 await socket.close()
-                del self.sockets[sid]
+                if sid in self.sockets:  # pragma: no cover
+                    del self.sockets[sid]
         else:
             await asyncio.wait([client.close()
                                 for client in six.itervalues(self.sockets)])
@@ -200,8 +201,12 @@ class AsyncServer(server.Server):
                     self.logger.info(origin + ' is not an accepted origin.')
                     r = self._bad_request()
                     make_response = self._async['make_response']
-                    response = make_response(r['status'], r['headers'],
-                                             r['response'], environ)
+                    if asyncio.iscoroutinefunction(make_response):
+                        response = await make_response(
+                            r['status'], r['headers'], r['response'], environ)
+                    else:
+                        response = make_response(r['status'], r['headers'],
+                                                 r['response'], environ)
                     return response
 
         method = environ['REQUEST_METHOD']
