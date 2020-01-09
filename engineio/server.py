@@ -289,7 +289,8 @@ class Server(object):
                 pass
             else:
                 socket.close()
-                del self.sockets[sid]
+                if sid in self.sockets:  # pragma: no cover
+                    del self.sockets[sid]
         else:
             for client in six.itervalues(self.sockets):
                 client.close()
@@ -597,13 +598,19 @@ class Server(object):
                 'response': b'Unauthorized'}
 
     def _cors_allowed_origins(self, environ):
-        default_origin = None
+        default_origins = []
         if 'wsgi.url_scheme' in environ and 'HTTP_HOST' in environ:
-            default_origin = '{scheme}://{host}'.format(
-                scheme=environ['wsgi.url_scheme'], host=environ['HTTP_HOST'])
+            default_origins.append('{scheme}://{host}'.format(
+                scheme=environ['wsgi.url_scheme'], host=environ['HTTP_HOST']))
+            if 'HTTP_X_FORWARDED_HOST' in environ:
+                scheme = environ.get(
+                    'HTTP_X_FORWARDED_PROTO',
+                    environ['wsgi.url_scheme']).split(',')[0].strip()
+                default_origins.append('{scheme}://{host}'.format(
+                    scheme=scheme, host=environ['HTTP_X_FORWARDED_HOST'].split(
+                        ',')[0].strip()))
         if self.cors_allowed_origins is None:
-            allowed_origins = [default_origin] \
-                if default_origin is not None else []
+            allowed_origins = default_origins
         elif self.cors_allowed_origins == '*':
             allowed_origins = None
         elif isinstance(self.cors_allowed_origins, six.string_types):
@@ -652,7 +659,7 @@ class Server(object):
                 continue
 
             # go through the entire client list in a ping interval cycle
-            sleep_interval = self.ping_timeout / len(self.sockets)
+            sleep_interval = float(self.ping_timeout) / len(self.sockets)
 
             try:
                 # iterate over the current clients
