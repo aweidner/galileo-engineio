@@ -359,7 +359,7 @@ class Client(object):
         if self.http:
             cookies = '; '.join(["{}={}".format(cookie.name, cookie.value)
                                  for cookie in self.http.cookies])
-        sslopt = {'certfile': cert}
+        sslopt = {'ca_certs': cert, "cert_reqs": ssl.CERT_REQUIRED}
         try:
             if not self.ssl_verify:
                 ws = websocket.create_connection(
